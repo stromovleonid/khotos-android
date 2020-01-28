@@ -6,3 +6,8 @@ import javax.inject.Scope
 @MustBeDocumented
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
 annotation class AppScope
+
+@Scope
+@MustBeDocumented
+@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
+annotation class ActivityScope

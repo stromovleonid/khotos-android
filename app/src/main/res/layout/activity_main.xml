@@ -5,9 +5,8 @@
     android:layout_height="match_parent"
     tools:context="com.example.khotos_android.view.MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
+    <FrameLayout
         android:id="@+id/container"
-        android:name="com.example.feature_login.presentation.sign_in.SignInFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
