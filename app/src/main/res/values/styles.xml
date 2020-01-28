@@ -4,10 +4,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="iconsColor">@color/black</item>
     </style>
 
-    <attr name="backgroundColor" format="color"/>
-    <attr name="lightTextColor" format="color"/>
-    <attr name="iconsColor" format="color"/>
+
 
 </resources>

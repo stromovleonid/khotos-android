@@ -1,2 +1,2 @@
-include ':app', ':data', ':feature-login'
+include ':app', ':data', ':feature-login', ':resources'
 rootProject.name='khotos-android-2'

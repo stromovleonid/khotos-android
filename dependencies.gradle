@@ -25,6 +25,7 @@ ext {
     junitVersion = "4.12"
     androidXTestRunnerVersion = "1.2.0"
     mockitoVersion = "3.2.4"
+    workflowVersion = "0.22.4"
 
 
     daggerDependencies = { dependencyHandler ->
@@ -39,6 +40,8 @@ ext {
 
     viewDependencies = { dependencyHandler ->
         delegate = dependencyHandler
+
+        implementation project(':resources')
 
         implementation "androidx.recyclerview:recyclerview:$androidXVersion"
         implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -55,6 +58,7 @@ ext {
         implementation 'androidx.legacy:legacy-support-v4:1.0.0'
         implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
         implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+        implementation "com.squareup.workflow:workflow-ui-android:$workflowVersion"
     }
 
     dataDependencies = { dependencyHandler ->
