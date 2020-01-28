@@ -23,6 +23,7 @@ android {
 
 dependencies {
     implementation project(':data')
+    implementation project(':feature-login')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
@@ -32,18 +33,5 @@ dependencies {
     dataDependencies dependencies
     commonDependencies dependencies
     testingDependencies dependencies
-
-    api "com.jakewharton.timber:timber:$timberVersion"
-
-    api "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    api "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-
-    implementation "ru.terrakok.cicerone:cicerone:$navVersion"
-
-    api "com.google.code.gson:gson:$gsonVersion"
-
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
 }
