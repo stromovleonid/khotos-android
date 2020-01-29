@@ -1,7 +1,7 @@
 package com.example.khotos_android.di.network
 
 import com.example.data.datasources.api.ApiServiceAdapter
-import com.example.khotos_android.di.AppScope
+import com.example.common.di.AppScope
 import com.example.khotos_android.di.app.AppComponent
 import dagger.Component
 

@@ -1,18 +1,19 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion compiledSdk
+
     defaultConfig {
-        applicationId appId
         minSdkVersion minSdk
         targetSdkVersion targetSdk
-        versionCode appVesrionCode
-        versionName appVersionName
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -20,28 +21,23 @@ android {
         }
     }
 
-    flavorDimensions("basic")
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
-    productFlavors {
-        dev {
-            dimension "basic"
-            buildConfigField "String", "BASE_URL", "\"http://192.168.0.102:8080\""
-        }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
 dependencies {
-    implementation project(':data')
-    implementation project(':feature-login')
-    implementation project(':common')
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    daggerDependencies dependencies
+    implementation project(':data')
+
     viewDependencies dependencies
-    dataDependencies dependencies
     commonDependencies dependencies
-    testingDependencies dependencies
-
+    daggerDependencies dependencies
 }

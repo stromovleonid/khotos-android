@@ -3,7 +3,7 @@ package com.example.khotos_android.di.network
 import com.example.data.datasources.api.ApiService
 import com.example.data.datasources.api.ApiServiceAdapter
 import com.example.khotos_android.BuildConfig
-import com.example.khotos_android.di.AppScope
+import com.example.common.di.AppScope
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides

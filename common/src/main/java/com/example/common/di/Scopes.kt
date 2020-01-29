@@ -1,4 +1,4 @@
-package com.example.khotos_android.di
+package com.example.common.di
 
 import javax.inject.Scope
 
@@ -11,3 +11,8 @@ annotation class AppScope
 @MustBeDocumented
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
 annotation class ActivityScope
+
+@Scope
+@MustBeDocumented
+@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
+annotation class FragmentScope
