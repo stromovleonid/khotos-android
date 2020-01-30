@@ -5,7 +5,11 @@ import com.example.common.di.ActivityScope
 import com.example.khotos_android.view.MainActivity
 import dagger.BindsInstance
 import dagger.Component
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 @ActivityScope
 @Component(modules = [MainActivityModule::class])
 interface MainActivityComponent {

@@ -11,20 +11,21 @@ import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
 class NetworkModule {
 
     @Provides
-    @AppScope
+    @Singleton
     fun provideHttpClient() = OkHttpClient.Builder().build()
 
     @Provides
-    @AppScope
+    @Singleton
     fun provideConverterFactory(gson: Gson): Converter.Factory = GsonConverterFactory.create(gson)
 
     @Provides
-    @AppScope
+    @Singleton
     fun provideRetrofit(httpClient: OkHttpClient, converterFactory: Converter.Factory): Retrofit =
         Retrofit.Builder()
             .client(httpClient)
@@ -33,11 +34,11 @@ class NetworkModule {
             .build()
 
     @Provides
-    @AppScope
+    @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 
     @Provides
-    @AppScope
+    @Singleton
     fun provideApiServiceAdapter(apiService: ApiService): ApiServiceAdapter =
         ApiServiceAdapter(apiService)
 }

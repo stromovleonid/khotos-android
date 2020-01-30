@@ -32,6 +32,9 @@ abstract class BaseModel<S: ModelState>(
                 val newIntent = intents.receive()
                 val newState = newIntent.reduce(data.value)
                 data.offer(newState)
+                newIntent.sideEffect(newState)?.let {
+                    consume(it)
+                }
             }
         }
     }

@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.sign_in_fragment.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
+import timber.log.Timber
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -58,7 +59,7 @@ class SignInFragment :
     }
 
     override fun render(state: LoginViewState) {
-
+        Timber.i("onNewState $state")
         when(state) {
             is LoginViewState.Error -> {
                 hideLoading()
@@ -77,6 +78,8 @@ class SignInFragment :
                 hideLoading()
                 signIn.isEnabled = state.isValid
                 setInputEnabled(true)
+                loginInput.isErrorEnabled = false
+                passwordInput.isErrorEnabled = false
             }
 
             is LoginViewState.Loading -> {
