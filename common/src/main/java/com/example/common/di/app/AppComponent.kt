@@ -1,9 +1,13 @@
 package com.example.common.di.app
 
+import android.content.Context
+import androidx.fragment.app.FragmentActivity
 import com.example.common.di.network.NetworkModule
 import com.example.data.datasources.api.ApiServiceAdapter
+import com.example.data.interactor.TokenInteractor
 import com.example.data.utils.DispatchersProvider
 import com.google.gson.Gson
+import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
@@ -15,4 +19,14 @@ interface AppComponent {
     fun getGson(): Gson
 
     fun getApiServiceAdapter(): ApiServiceAdapter
+
+    fun getTokenInteractor(): TokenInteractor
+
+    @Component.Builder
+    interface Builder {
+        fun build(): AppComponent
+
+        @BindsInstance
+        fun context(appContext: Context): Builder
+    }
 }

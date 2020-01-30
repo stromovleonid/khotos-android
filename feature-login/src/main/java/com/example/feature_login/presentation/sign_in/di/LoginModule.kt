@@ -9,6 +9,7 @@ import com.example.common.mvi.intent.StateMapper
 import com.example.common.mvi.model.Model
 import com.example.common.view.ViewModelFactory
 import com.example.data.datasources.api.ApiServiceAdapter
+import com.example.data.interactor.TokenInteractor
 import com.example.data.utils.DispatchersProvider
 import com.example.data.utils.DispatchersProviderImpl
 import com.example.feature_login.presentation.sign_in.intent.LoginIntentFactory
@@ -57,8 +58,8 @@ abstract class LoginModule {
         @JvmStatic
         @Provides
         @FragmentScope
-        fun providesIntentFactory(apiServiceAdapter: ApiServiceAdapter, dispatchersProvider: DispatchersProvider): IntentFactory<LoginViewEvent, LoginModelState> {
-            return LoginIntentFactory(apiServiceAdapter, dispatchersProvider)
+        fun providesIntentFactory(apiServiceAdapter: ApiServiceAdapter, dispatchersProvider: DispatchersProvider, tokenInteractor: TokenInteractor): IntentFactory<LoginViewEvent, LoginModelState> {
+            return LoginIntentFactory(apiServiceAdapter, dispatchersProvider, tokenInteractor)
         }
 
         @JvmStatic
