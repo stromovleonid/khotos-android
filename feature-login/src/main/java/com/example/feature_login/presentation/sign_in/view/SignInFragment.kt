@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.common.di.InjectionsHolder
 import com.example.common.view.extensions.clicks
+import com.example.common.view.extensions.disableError
 import com.example.common.view.extensions.textChanges
 import com.example.common.view.fragment.BlockingLoadingFragment
 
@@ -78,8 +79,8 @@ class SignInFragment :
                 hideLoading()
                 signIn.isEnabled = state.isValid
                 setInputEnabled(true)
-                loginInput.isErrorEnabled = false
-                passwordInput.isErrorEnabled = false
+                loginInput.disableError()
+                passwordInput.disableError()
             }
 
             is LoginViewState.Loading -> {

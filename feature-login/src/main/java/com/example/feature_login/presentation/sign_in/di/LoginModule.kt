@@ -57,8 +57,8 @@ abstract class LoginModule {
         @JvmStatic
         @Provides
         @FragmentScope
-        fun providesIntentFactory(apiServiceAdapter: ApiServiceAdapter): IntentFactory<LoginViewEvent, LoginModelState> {
-            return LoginIntentFactory(apiServiceAdapter)
+        fun providesIntentFactory(apiServiceAdapter: ApiServiceAdapter, dispatchersProvider: DispatchersProvider): IntentFactory<LoginViewEvent, LoginModelState> {
+            return LoginIntentFactory(apiServiceAdapter, dispatchersProvider)
         }
 
         @JvmStatic

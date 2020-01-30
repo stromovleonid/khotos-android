@@ -16,7 +16,7 @@ interface Model<MS: ModelState> {
 
 @ExperimentalCoroutinesApi
 @FlowPreview
-abstract class BaseModel<S: ModelState>(
+abstract class BaseChannelModel<S: ModelState>(
     initialState: S,
     dispatchersProvider: DispatchersProvider):
     Model<S> {
@@ -32,9 +32,7 @@ abstract class BaseModel<S: ModelState>(
                 val newIntent = intents.receive()
                 val newState = newIntent.reduce(data.value)
                 data.offer(newState)
-                newIntent.sideEffect(newState)?.let {
-                    consume(it)
-                }
+                newIntent.sideEffect(newState, this@BaseChannelModel, modelScope)
             }
         }
     }

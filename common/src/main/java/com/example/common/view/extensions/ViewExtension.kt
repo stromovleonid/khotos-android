@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.TextView
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
@@ -24,4 +25,9 @@ fun TextView.textChanges() = callbackFlow {
     addTextChangedListener(textWatcher)
 
     awaitClose { removeTextChangedListener(textWatcher) }
+}
+
+fun TextInputLayout.disableError() {
+    error = null
+    isErrorEnabled = false
 }
