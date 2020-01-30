@@ -1,8 +1,8 @@
-package com.example.khotos_android.di.network
+package com.example.common.di.network
 
+import com.example.common.BuildConfig
 import com.example.data.datasources.api.ApiService
 import com.example.data.datasources.api.ApiServiceAdapter
-import com.example.khotos_android.BuildConfig
 import com.example.common.di.AppScope
 import com.google.gson.Gson
 import dagger.Module

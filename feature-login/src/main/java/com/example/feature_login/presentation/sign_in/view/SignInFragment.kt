@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.common.mvi.view.BaseFragment
+import com.example.common.di.InjectionsHolder
 import com.example.common.view.extensions.clicks
 import com.example.common.view.extensions.textChanges
+import com.example.common.view.fragment.BlockingLoadingFragment
 
 import com.example.feature_login.R
 import com.example.feature_login.presentation.sign_in.di.DaggerLoginComponent
@@ -23,7 +23,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @FlowPreview
 class SignInFragment :
-    BaseFragment<LoginViewEvent, LoginViewState, LoginModelState, SignInViewModel>() {
+    BlockingLoadingFragment<LoginViewEvent, LoginViewState, LoginModelState>() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -35,7 +35,11 @@ class SignInFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        DaggerLoginComponent.create().inject(this)
+        DaggerLoginComponent
+            .builder()
+            .appComponent(InjectionsHolder.appComponent)
+            .build()
+            .inject(this)
     }
 
     override fun onCreateView(
@@ -54,17 +58,42 @@ class SignInFragment :
     }
 
     override fun render(state: LoginViewState) {
-        state.run {
-            loginInput.isErrorEnabled = loginError != null
-            loginInput.error = loginError
 
-            passwordInput.isErrorEnabled = loginError != null
-            passwordInput.error = passwordError
+        when(state) {
+            is LoginViewState.Error -> {
+                hideLoading()
 
-            authError?.let {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT)
+                loginInput.isErrorEnabled = state.loginError != null
+                loginInput.error = state.loginError
+
+                passwordInput.isErrorEnabled = state.loginError != null
+                passwordInput.error = state.passwordError
+
+                signIn.isEnabled = state.isValid
+                setInputEnabled(true)
+            }
+
+            is LoginViewState.UserInput -> {
+                hideLoading()
+                signIn.isEnabled = state.isValid
+                setInputEnabled(true)
+            }
+
+            is LoginViewState.Loading -> {
+                showLoading()
+                setInputEnabled(false)
+            }
+
+            is LoginViewState.Success -> {
+                hideLoading()
+                setInputEnabled(true)
             }
         }
+    }
+
+    private fun setInputEnabled(isEnabled: Boolean) {
+        loginInput.isEnabled = isEnabled
+        passwordInput.isEnabled = isEnabled
     }
 
     companion object {

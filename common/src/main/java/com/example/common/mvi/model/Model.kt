@@ -22,7 +22,7 @@ abstract class BaseModel<S: ModelState>(
     Model<S> {
 
     private val intents: Channel<Intent<S>> = Channel()
-    private val dataFlow = ConflatedBroadcastChannel(initialState)
+    private val data = ConflatedBroadcastChannel(initialState)
 
     private val modelScope = CoroutineScope(dispatchersProvider.def + SupervisorJob())
 
@@ -30,8 +30,8 @@ abstract class BaseModel<S: ModelState>(
         modelScope.launch {
             while (isActive) {
                 val newIntent = intents.receive()
-                val newState = newIntent.reduce(dataFlow.value)
-                dataFlow.offer(newState)
+                val newState = newIntent.reduce(data.value)
+                data.offer(newState)
             }
         }
     }
@@ -40,11 +40,11 @@ abstract class BaseModel<S: ModelState>(
         intents.send(intent)
     }
 
-    override fun observe() = dataFlow.asFlow()
+    override fun observe() = data.asFlow()
 
     override fun dispose() {
         intents.close()
-        dataFlow.close()
+        data.close()
         modelScope.cancel()
     }
 }

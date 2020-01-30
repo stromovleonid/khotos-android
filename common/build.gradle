@@ -29,6 +29,15 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    flavorDimensions("basic")
+
+    productFlavors {
+        dev {
+            dimension "basic"
+            buildConfigField "String", "BASE_URL", "\"http://192.168.0.102:8080\""
+        }
+    }
 }
 
 dependencies {
@@ -40,4 +49,5 @@ dependencies {
     viewDependencies dependencies
     commonDependencies dependencies
     daggerDependencies dependencies
+    dataDependencies dependencies
 }

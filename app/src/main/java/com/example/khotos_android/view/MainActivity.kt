@@ -1,14 +1,17 @@
 package com.example.khotos_android.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.khotos_android.R
 import com.example.khotos_android.di.activity.DaggerMainActivityComponent
 import com.example.khotos_android.navigation.AppScreen
 import com.example.khotos_android.navigation.NavigationHandler
-import dagger.android.AndroidInjection
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
+@FlowPreview
 class MainActivity : AppCompatActivity() {
 
     @Inject

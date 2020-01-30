@@ -1,4 +1,4 @@
-package com.example.khotos_android.di.app
+package com.example.common.di.app
 
 import com.example.data.utils.DispatchersProvider
 import com.google.gson.Gson

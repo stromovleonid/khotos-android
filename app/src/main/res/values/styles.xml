@@ -6,6 +6,7 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="iconsColor">@color/black</item>
+        <item name="backgroundColor">@color/white</item>
     </style>
 
 

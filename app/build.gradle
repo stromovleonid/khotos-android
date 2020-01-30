@@ -19,15 +19,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    flavorDimensions("basic")
-
-    productFlavors {
-        dev {
-            dimension "basic"
-            buildConfigField "String", "BASE_URL", "\"http://192.168.0.102:8080\""
-        }
-    }
 }
 
 dependencies {

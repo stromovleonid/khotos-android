@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @ExperimentalCoroutinesApi
-abstract class BaseFragment<E: ViewEvent, VS: ViewState, MS: ModelState, VM: BaseViewModel<E, VS, MS>> : Fragment() {
+abstract class BaseFragment<E: ViewEvent, VS: ViewState, MS: ModelState> : Fragment() {
 
-    abstract val viewModel: VM
+    abstract val viewModel: BaseViewModel<E, VS, MS>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

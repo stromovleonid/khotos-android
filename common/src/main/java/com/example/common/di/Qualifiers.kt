@@ -1,4 +1,4 @@
-package com.example.khotos_android.di
+package com.example.common.di
 
 import javax.inject.Qualifier
 
