@@ -6,7 +6,7 @@ import com.orhanobut.hawk.Hawk
 interface PersistentKeyValueStorage {
     fun <V> put(key: String, value: V)
 
-    fun <V> get(key: String): V
+    fun <V> get(key: String): V?
 }
 
 class SecurePersistentKeyValueStorage(context: Context): PersistentKeyValueStorage {
@@ -19,7 +19,7 @@ class SecurePersistentKeyValueStorage(context: Context): PersistentKeyValueStora
         Hawk.put(key, value)
     }
 
-    override fun <V> get(key: String): V {
+    override fun <V> get(key: String): V? {
         return Hawk.get(key)
     }
 }

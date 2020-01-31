@@ -5,18 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import com.example.common.di.InjectionsHolder
+import com.example.common.mvi.view.BaseFragment
 import com.example.feature_splash.R
+import com.example.feature_splash.di.DaggerSplashComponent
 import kotlinx.android.synthetic.main.splash_fragment.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.emptyFlow
+import javax.inject.Inject
 
-class SplashFragment : Fragment() {
+@FlowPreview
+@ExperimentalCoroutinesApi
+class SplashFragment : BaseFragment<SplashViewEvent, SplashViewModelState, SplashViewModelState>() {
 
-    companion object {
-        fun newInstance() = SplashFragment()
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    override val viewModel: SplashViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(SplashViewModel::class.java)
     }
-
-    private lateinit var viewModel: SplashViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,9 +34,14 @@ class SplashFragment : Fragment() {
         return inflater.inflate(R.layout.splash_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        DaggerSplashComponent
+            .builder()
+            .appComponent(InjectionsHolder.appComponent)
+            .build()
+            .inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,5 +53,20 @@ class SplashFragment : Fragment() {
             .alpha(1f)
             .setStartDelay(400)
             .start()
+    }
+
+    override fun viewEvents() = emptyFlow<SplashViewEvent>()
+
+    override fun render(state: SplashViewModelState) {
+        if (state is SplashViewModelState.Loading) {
+            logo.animate()
+                .rotation(360f)
+                .setDuration(800)
+                .start()
+        }
+    }
+
+    companion object {
+        fun newInstance() = SplashFragment()
     }
 }

@@ -1,7 +1,6 @@
 package com.example.common.di.app
 
 import android.content.Context
-import androidx.fragment.app.FragmentActivity
 import com.example.common.di.network.NetworkModule
 import com.example.data.datasources.api.ApiServiceAdapter
 import com.example.data.interactor.TokenInteractor

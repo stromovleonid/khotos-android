@@ -1,13 +1,21 @@
 package com.example.data.interactor
 
-import timber.log.Timber
-
-
 private const val TOKEN = "token"
 
 class TokenInteractor(private val storage: SecurePersistentKeyValueStorage) {
-    fun saveToken(token: String) {
-        Timber.i("token $token")
+
+    private var cache: String? = null
+
+    fun saveToken(token: String) = synchronized(this) {
+        cache = token
         storage.put(TOKEN, token)
+    }
+
+    fun getToken(): String? = synchronized(this) {
+        if (cache == null) {
+            val token = storage.get<String>(TOKEN)
+            cache = token
+        }
+        return cache
     }
 }
