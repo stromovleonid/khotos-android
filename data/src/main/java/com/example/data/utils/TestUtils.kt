@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 object TestUtils {
-    suspend fun testPause() = delay(20)
+    suspend fun testPause() = delay(100)
 
     @ExperimentalCoroutinesApi
     inline fun <T> CoroutineScope.testObserveFlow(flow: Flow<T>, crossinline callback: (T) -> Unit) =

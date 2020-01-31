@@ -2,8 +2,6 @@ package com.example.data.interactor
 
 import android.content.Context
 import com.orhanobut.hawk.Hawk
-import javax.inject.Inject
-import javax.inject.Singleton
 
 interface PersistentKeyValueStorage {
     fun <V> put(key: String, value: V)
