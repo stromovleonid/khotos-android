@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.SplashFragment">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:scaleX="0"
+        android:scaleY="0"
+        android:alpha="0"
+        android:src="@drawable/ic_monochrome_photos_black_24dp"
+        android:tint="?attr/colorPrimaryDark"
+        android:layout_gravity="center"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        tools:ignore="ContentDescription" />
+
+</FrameLayout>

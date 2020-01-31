@@ -26,6 +26,6 @@ class MainActivity : AppCompatActivity() {
             .build()
             .inject(this)
 
-        navigationHandler.navigateTo(AppScreen.SignInScreen)
+        navigationHandler.navigateTo(AppScreen.SplashScreen)
     }
 }

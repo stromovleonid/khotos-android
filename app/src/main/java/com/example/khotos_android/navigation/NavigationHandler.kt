@@ -2,6 +2,7 @@ package com.example.khotos_android.navigation
 
 import androidx.fragment.app.Fragment
 import com.example.feature_login.presentation.sign_in.view.SignInFragment
+import com.example.feature_splash.view.SplashFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import ru.terrakok.cicerone.Cicerone
@@ -23,6 +24,10 @@ sealed class AppScreen: SupportAppScreen() {
 
     object SignInScreen: AppScreen() {
         override fun getFragment(): Fragment = SignInFragment.newInstance()
+    }
+
+    object SplashScreen: AppScreen() {
+        override fun getFragment(): Fragment = SplashFragment.newInstance()
     }
 }
 
