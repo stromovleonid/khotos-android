@@ -9,9 +9,6 @@ import com.example.data.utils.DispatchersProvider
 import com.example.feature_login.presentation.sign_in.model.LoginModelState
 import com.example.feature_login.presentation.sign_in.view.LoginViewEvent
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.lang.Exception
-import java.lang.RuntimeException
 
 class LoginIntentFactory(
     private val authApi: AuthApi,
