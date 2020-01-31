@@ -22,7 +22,6 @@ class SplashIntentFactory(
                 scope.launch(dispatchersProvider.io) {
                     model.consume(checkToken())
                 }
-
             }
         }
 

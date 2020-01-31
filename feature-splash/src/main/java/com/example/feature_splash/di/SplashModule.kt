@@ -1,14 +1,12 @@
 package com.example.feature_splash.di
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.common.di.FragmentScope
 import com.example.common.di.ViewModelKey
 import com.example.common.mvi.intent.IntentFactory
 import com.example.common.mvi.intent.StateMapper
 import com.example.common.mvi.intent.TransientStateMapper
 import com.example.common.mvi.model.Model
-import com.example.common.view.ViewModelFactory
 import com.example.data.datasources.api.ApiServiceAdapter
 import com.example.data.interactor.TokenInteractor
 import com.example.data.utils.DispatchersProvider
@@ -22,7 +20,6 @@ import dagger.Provides
 import dagger.multibindings.IntoMap
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import javax.inject.Provider
 
 @Module
 abstract class SplashModule {
@@ -67,14 +64,5 @@ abstract class SplashModule {
         fun providesStateMapper(): StateMapper<SplashViewModelState, SplashViewModelState> {
             return TransientStateMapper()
         }
-
-        @JvmStatic
-        @Provides
-        @FragmentScope
-        fun providesFactory(viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>): ViewModelProvider.Factory {
-            return ViewModelFactory(viewModels)
-        }
-
-
     }
 }

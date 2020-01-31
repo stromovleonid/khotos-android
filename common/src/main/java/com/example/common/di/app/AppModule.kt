@@ -30,7 +30,6 @@ abstract class AppModule {
         @Reusable
         @DateTimeFormatQualifier
         fun provideDateTimeFormat(): String = "dd-MM-yyyy, HH:mm"
-
     }
 
 }
