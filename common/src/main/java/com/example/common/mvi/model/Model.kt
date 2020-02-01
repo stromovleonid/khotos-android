@@ -8,7 +8,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 
-interface Model<MS: ModelState> {
+interface Model<MS : ModelState> {
     suspend fun consume(intent: Intent<MS>)
     fun observe(): Flow<MS>
     fun dispose()
@@ -16,10 +16,10 @@ interface Model<MS: ModelState> {
 
 @ExperimentalCoroutinesApi
 @FlowPreview
-abstract class BaseChannelModel<S: ModelState>(
+open class BaseChannelModel<S : ModelState>(
     initialState: S,
-    dispatchersProvider: DispatchersProvider):
-    Model<S> {
+    dispatchersProvider: DispatchersProvider
+) : Model<S> {
 
     private val intents: Channel<Intent<S>> = Channel()
     private val data = ConflatedBroadcastChannel(initialState)
