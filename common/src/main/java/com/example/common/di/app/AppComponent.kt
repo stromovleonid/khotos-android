@@ -6,6 +6,7 @@ import com.example.common.di.network.NetworkModule
 import com.example.data.datasources.api.ApiServiceAdapter
 import com.example.data.datasources.api.AuthApi
 import com.example.data.interactors.token.TokenInteractor
+import com.example.data.repositories.AuthRepository
 import com.example.data.utils.DispatchersProvider
 import com.google.gson.Gson
 import dagger.BindsInstance
@@ -29,6 +30,8 @@ interface AppComponent {
     fun getTokenInteractor(): TokenInteractor
 
     fun getAuthApi(): AuthApi
+
+    fun getAuthRepository(): AuthRepository
 
     @Component.Builder
     interface Builder {

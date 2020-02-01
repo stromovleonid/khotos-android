@@ -7,9 +7,10 @@ import com.example.common.mvi.intent.IntentFactory
 import com.example.common.mvi.intent.StateMapper
 import com.example.common.mvi.model.BaseChannelModel
 import com.example.common.mvi.model.Model
-import com.example.data.datasources.api.AuthApi
 import com.example.data.interactors.token.TokenInteractor
+import com.example.data.repositories.AuthRepository
 import com.example.data.utils.DispatchersProvider
+import com.example.feature_login.presentation.sign_in.domain.AuthUseCase
 import com.example.feature_login.presentation.sign_in.intent.LoginIntentFactory
 import com.example.feature_login.presentation.sign_in.model.LoginModelState
 import com.example.feature_login.presentation.sign_in.model.LoginStateMapper
@@ -59,8 +60,8 @@ abstract class LoginModule {
         @JvmStatic
         @Provides
         @FragmentScope
-        fun providesIntentFactory(authApi: AuthApi, dispatchersProvider: DispatchersProvider, tokenInteractor: TokenInteractor): IntentFactory<LoginViewEvent, LoginModelState> {
-            return LoginIntentFactory(authApi, dispatchersProvider, tokenInteractor)
+        fun providesIntentFactory(authUseCase: AuthUseCase, dispatchersProvider: DispatchersProvider): IntentFactory<LoginViewEvent, LoginModelState> {
+            return LoginIntentFactory(authUseCase, dispatchersProvider)
         }
 
         @JvmStatic
@@ -68,6 +69,13 @@ abstract class LoginModule {
         @FragmentScope
         fun providesStateMapper(): StateMapper<LoginViewState, LoginModelState> {
             return LoginStateMapper()
+        }
+
+        @JvmStatic
+        @Provides
+        @FragmentScope
+        fun providesAuthUseCase(authRepository: AuthRepository, tokenInteractor: TokenInteractor): AuthUseCase {
+            return AuthUseCase(authRepository, tokenInteractor)
         }
     }
 }

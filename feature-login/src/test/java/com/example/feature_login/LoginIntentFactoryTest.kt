@@ -6,9 +6,11 @@ import com.example.data.datasources.api.AuthApi
 import com.example.data.interactors.token.TokenInteractor
 import com.example.data.model.dto.AuthResponse
 import com.example.data.model.dto.UserMetadataResponse
+import com.example.data.repositories.AuthRepository
 import com.example.data.utils.DispatchersProviderImpl
 import com.example.data.utils.TestUtils.testObserveFlow
 import com.example.data.utils.TestUtils.testPause
+import com.example.feature_login.presentation.sign_in.domain.AuthUseCase
 import com.example.feature_login.presentation.sign_in.intent.LoginIntentFactory
 import com.example.feature_login.presentation.sign_in.model.LoginModelState
 import com.example.feature_login.presentation.sign_in.view.LoginViewEvent
@@ -42,6 +44,10 @@ class LoginIntentFactoryTest {
 
     lateinit var model: Model<LoginModelState>
 
+    lateinit var useCase: AuthUseCase
+
+    lateinit var authRepository: AuthRepository
+
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
@@ -49,7 +55,9 @@ class LoginIntentFactoryTest {
         doNothing().`when`(tokenInteractor).saveToken(ArgumentMatchers.anyString())
 
         model = BaseChannelModel(LoginModelState.default(), dispatchersProvider)
-        factory = LoginIntentFactory(authApi, dispatchersProvider, tokenInteractor)
+        authRepository = AuthRepository(authApi, dispatchersProvider)
+        useCase = AuthUseCase(authRepository, tokenInteractor)
+        factory = LoginIntentFactory(useCase, dispatchersProvider)
     }
 
 

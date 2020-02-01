@@ -14,4 +14,12 @@ class AuthRepository(private val authApi: AuthApi,
             }
         }
     }
+
+    suspend fun auth(login: String, pass: String): AuthResponse {
+        return withContext(dispatchersProvider.io) {
+            executeApiRequest {
+                authApi.login(login, pass)
+            }
+        }
+    }
 }

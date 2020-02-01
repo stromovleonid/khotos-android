@@ -3,17 +3,15 @@ package com.example.feature_login.presentation.sign_in.intent
 import com.example.common.mvi.intent.Intent
 import com.example.common.mvi.intent.IntentFactory
 import com.example.common.mvi.model.Model
-import com.example.data.datasources.api.AuthApi
-import com.example.data.interactors.token.TokenInteractor
 import com.example.data.utils.DispatchersProvider
+import com.example.feature_login.presentation.sign_in.domain.AuthUseCase
 import com.example.feature_login.presentation.sign_in.model.LoginModelState
 import com.example.feature_login.presentation.sign_in.view.LoginViewEvent
 import kotlinx.coroutines.launch
 
 class LoginIntentFactory(
-    private val authApi: AuthApi,
-    private val dispatchersProvider: DispatchersProvider,
-    private val tokenInteractor: TokenInteractor
+    private val authUseCase: AuthUseCase,
+    private val dispatchersProvider: DispatchersProvider
 ) : IntentFactory<LoginViewEvent, LoginModelState> {
     override suspend fun toIntent(event: LoginViewEvent): Intent<LoginModelState> {
         return when (event) {
@@ -38,7 +36,7 @@ class LoginIntentFactory(
                     isSuccess = false
                 )
             }) { state, model, scope ->
-                scope.launch(dispatchersProvider.io) {
+                scope.launch(dispatchersProvider.def) {
                     auth(state, model)
                 }
             }
@@ -49,23 +47,11 @@ class LoginIntentFactory(
         state: LoginModelState,
         model: Model<LoginModelState>
     ) {
-        val authResult = try {
-            authApi.login(state.login, state.password)
-        } catch (e: Exception) {
-            model.consume(Intent.create { it.copy(error = RuntimeException(), isLoading = false, isSuccess = false) })
-            return
-        }
-
-        val body = authResult.body()
-        if (authResult.isSuccessful && body != null) {
-            tokenInteractor.saveToken(body.token)
+        try {
+            authUseCase.auth(state.login, state.password)
             model.consume(Intent.create { it.copy(isSuccess = true, isLoading = false, error = null) })
-        } else model.consume(Intent.create {
-            it.copy(
-                error = RuntimeException(),
-                isLoading = false,
-                isSuccess = false
-            )
-        })
+        } catch (e: Exception) {
+            model.consume(Intent.create { it.copy(error = e, isLoading = false, isSuccess = false) })
+        }
     }
 }
