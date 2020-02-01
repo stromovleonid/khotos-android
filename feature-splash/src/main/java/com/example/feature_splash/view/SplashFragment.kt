@@ -58,11 +58,13 @@ class SplashFragment : BaseFragment<SplashViewEvent, SplashViewModelState, Splas
     override fun viewEvents() = emptyFlow<SplashViewEvent>()
 
     override fun render(state: SplashViewModelState) {
-        if (state is SplashViewModelState.Loading) {
-            logo.animate()
-                .rotation(360f)
-                .setDuration(800)
-                .start()
+        when (state) {
+            SplashViewModelState.Loading ->
+                logo.animate()
+                    .rotation(360f)
+                    .setDuration(800)
+                    .start()
+            SplashViewModelState.NotLogged -> navigator?.signIn()
         }
     }
 

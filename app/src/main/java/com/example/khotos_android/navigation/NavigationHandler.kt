@@ -1,6 +1,7 @@
 package com.example.khotos_android.navigation
 
 import androidx.fragment.app.Fragment
+import com.example.common.navigation.Navigator
 import com.example.feature_login.presentation.sign_in.view.SignInFragment
 import com.example.feature_splash.view.SplashFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -11,16 +12,20 @@ import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 @FlowPreview
 @ExperimentalCoroutinesApi
-class NavigationHandler(private val cicerone: Cicerone<Router>) {
+class NavigationHandler(private val cicerone: Cicerone<Router>): Navigator {
 
-    fun exit() = cicerone.router.exit()
+    override fun signIn() = navigateTo(AppScreen.SignInScreen)
 
-    fun navigateTo(screen: AppScreen) = cicerone.router.navigateTo(screen)
+    override fun splash() = navigateTo(AppScreen.SplashScreen)
+
+    override fun exit() = cicerone.router.exit()
+
+    private fun navigateTo(screen: AppScreen) = cicerone.router.navigateTo(screen)
 }
 
 @FlowPreview
 @ExperimentalCoroutinesApi
-sealed class AppScreen: SupportAppScreen() {
+private sealed class AppScreen: SupportAppScreen() {
 
     object SignInScreen: AppScreen() {
         override fun getFragment(): Fragment = SignInFragment.newInstance()
