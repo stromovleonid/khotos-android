@@ -8,8 +8,7 @@ import com.example.common.mvi.intent.StateMapper
 import com.example.common.mvi.intent.TransientStateMapper
 import com.example.common.mvi.model.BaseChannelModel
 import com.example.common.mvi.model.Model
-import com.example.data.datasources.api.ApiServiceAdapter
-import com.example.data.interactor.TokenInteractor
+import com.example.data.interactors.token.TokenInteractor
 import com.example.data.utils.DispatchersProvider
 import com.example.feature_splash.intent.SplashIntentFactory
 import com.example.feature_splash.view.SplashViewEvent
@@ -59,10 +58,10 @@ abstract class SplashModule {
         @JvmStatic
         @Provides
         @FragmentScope
-        fun providesIntentFactory(apiServiceAdapter: ApiServiceAdapter,
-                                  dispatchersProvider: DispatchersProvider,
-                                  tokenInteractor: TokenInteractor): IntentFactory<SplashViewEvent, SplashViewModelState> {
-            return SplashIntentFactory(apiServiceAdapter, dispatchersProvider, tokenInteractor)
+        fun providesIntentFactory(dispatchersProvider: DispatchersProvider,
+                                  tokenInteractor: TokenInteractor
+        ): IntentFactory<SplashViewEvent, SplashViewModelState> {
+            return SplashIntentFactory(tokenInteractor, dispatchersProvider)
         }
 
         @JvmStatic

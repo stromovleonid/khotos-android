@@ -1,14 +1,15 @@
 package com.example.feature_login
 
+import com.example.common.mvi.model.BaseChannelModel
+import com.example.common.mvi.model.Model
 import com.example.data.datasources.api.AuthApi
-import com.example.data.interactor.TokenInteractor
+import com.example.data.interactors.token.TokenInteractor
 import com.example.data.model.dto.AuthResponse
 import com.example.data.model.dto.UserMetadataResponse
 import com.example.data.utils.DispatchersProviderImpl
 import com.example.data.utils.TestUtils.testObserveFlow
 import com.example.data.utils.TestUtils.testPause
 import com.example.feature_login.presentation.sign_in.intent.LoginIntentFactory
-import com.example.feature_login.presentation.sign_in.model.LoginModel
 import com.example.feature_login.presentation.sign_in.model.LoginModelState
 import com.example.feature_login.presentation.sign_in.view.LoginViewEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,7 +28,7 @@ import java.util.*
 
 @ExperimentalCoroutinesApi
 @FlowPreview
-class LoginModelTest {
+class LoginIntentFactoryTest {
 
     @Mock
     lateinit var authApi: AuthApi
@@ -39,7 +40,7 @@ class LoginModelTest {
 
     lateinit var factory: LoginIntentFactory
 
-    lateinit var model: LoginModel
+    lateinit var model: Model<LoginModelState>
 
     @Before
     fun setup() {
@@ -47,7 +48,7 @@ class LoginModelTest {
 
         doNothing().`when`(tokenInteractor).saveToken(ArgumentMatchers.anyString())
 
-        model = LoginModel(dispatchersProvider)
+        model = BaseChannelModel(LoginModelState.default(), dispatchersProvider)
         factory = LoginIntentFactory(authApi, dispatchersProvider, tokenInteractor)
     }
 

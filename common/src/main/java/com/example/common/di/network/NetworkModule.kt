@@ -4,8 +4,7 @@ import android.content.Context
 import com.example.common.BuildConfig
 import com.example.data.datasources.api.ApiService
 import com.example.data.datasources.api.ApiServiceAdapter
-import com.example.data.interactor.SecurePersistentKeyValueStorage
-import com.example.data.interactor.TokenInteractor
+import com.example.data.interactors.token.SecurePersistentKeyValueStorage
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -43,11 +42,6 @@ class NetworkModule {
     @Singleton
     fun provideApiServiceAdapter(apiService: ApiService): ApiServiceAdapter =
         ApiServiceAdapter(apiService)
-
-    @Provides
-    @Singleton
-    fun providesTokenInteractor(storage: SecurePersistentKeyValueStorage): TokenInteractor =
-        TokenInteractor(storage)
 
 
     @Provides

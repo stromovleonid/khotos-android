@@ -1,4 +1,4 @@
-package com.example.data.interactor
+package com.example.data.interactors.token
 
 import android.content.Context
 import com.orhanobut.hawk.Hawk
@@ -9,7 +9,8 @@ interface PersistentKeyValueStorage {
     fun <V> get(key: String): V?
 }
 
-class SecurePersistentKeyValueStorage(context: Context): PersistentKeyValueStorage {
+class SecurePersistentKeyValueStorage(context: Context):
+    PersistentKeyValueStorage {
 
     init {
         Hawk.init(context).build()

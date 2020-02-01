@@ -4,7 +4,7 @@ import com.example.common.mvi.intent.Intent
 import com.example.common.mvi.intent.IntentFactory
 import com.example.common.mvi.model.Model
 import com.example.data.datasources.api.AuthApi
-import com.example.data.interactor.TokenInteractor
+import com.example.data.interactors.token.TokenInteractor
 import com.example.data.utils.DispatchersProvider
 import com.example.feature_login.presentation.sign_in.model.LoginModelState
 import com.example.feature_login.presentation.sign_in.view.LoginViewEvent
@@ -52,18 +52,19 @@ class LoginIntentFactory(
         val authResult = try {
             authApi.login(state.login, state.password)
         } catch (e: Exception) {
-            model.consume(Intent.create { it.copy(error = RuntimeException(), isLoading = false) })
+            model.consume(Intent.create { it.copy(error = RuntimeException(), isLoading = false, isSuccess = false) })
             return
         }
 
         val body = authResult.body()
         if (authResult.isSuccessful && body != null) {
             tokenInteractor.saveToken(body.token)
-            model.consume(Intent.create { it.copy(isSuccess = true, isLoading = false) })
+            model.consume(Intent.create { it.copy(isSuccess = true, isLoading = false, error = null) })
         } else model.consume(Intent.create {
             it.copy(
                 error = RuntimeException(),
-                isLoading = false
+                isLoading = false,
+                isSuccess = false
             )
         })
     }
