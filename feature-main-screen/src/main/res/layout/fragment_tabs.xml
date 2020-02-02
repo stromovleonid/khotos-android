@@ -8,7 +8,13 @@
     tools:context=".view.TabsFragment">
 
     <FrameLayout
-        android:id="@+id/tabs_container"
+        android:id="@+id/tabPhotosContainer"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <FrameLayout
+        android:id="@+id/tabsProfileContainer"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>

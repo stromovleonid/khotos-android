@@ -2,6 +2,7 @@ package com.example.feature_main_screen.view
 
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,11 +23,29 @@ class TabsFragment : BaseNavigationFragment() {
         super.onViewCreated(view, savedInstanceState)
         menu.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.navigation_photos -> navigator?.photosTab()
-                R.id.navigation_profile -> navigator?.profileTab()
+                R.id.navigation_photos -> {
+                    onPhotosTabSelected()
+                }
+                R.id.navigation_profile -> {
+                    onProfileTabSelected()
+                }
             }
             true
         }
+
+        if (savedInstanceState == null) Handler().post { onPhotosTabSelected() }
+    }
+
+    private fun onProfileTabSelected() {
+        navigator?.profileTab()
+        tabPhotosContainer.visibility = View.GONE
+        tabsProfileContainer.visibility = View.VISIBLE
+    }
+
+    private fun onPhotosTabSelected() {
+        navigator?.photosTab()
+        tabPhotosContainer.visibility = View.VISIBLE
+        tabsProfileContainer.visibility = View.GONE
     }
 
     companion object {

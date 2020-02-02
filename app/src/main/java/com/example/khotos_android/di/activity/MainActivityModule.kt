@@ -19,7 +19,7 @@ class MainActivityModule {
     @Provides
     @ActivityScope
     fun providesNavigator(activity: FragmentActivity, cicerone: Cicerone<Router>): NavigationHandler {
-        return NavigationHandler(activity, cicerone, R.id.container, R.id.tabs_container)
+        return NavigationHandler(activity, cicerone, R.id.container, R.id.tabPhotosContainer, R.id.tabsProfileContainer)
     }
 
     @Provides

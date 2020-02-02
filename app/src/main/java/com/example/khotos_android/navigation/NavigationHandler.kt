@@ -23,19 +23,20 @@ class NavigationHandler(
     private val activity: FragmentActivity,
     private val cicerone: Cicerone<Router>,
     @IdRes private val mainContainerId: Int,
-    @IdRes private val tabsContainerId: Int
+    @IdRes private val photosTabContainerId: Int,
+    @IdRes private val profileTabContainerId: Int
 ) : Navigator {
 
     private val photosTabNavigator: ru.terrakok.cicerone.Navigator by lazy {
         Timber.i("photos tab navigator created")
-        SupportAppNavigator(activity, tabsContainerId).apply {
+        SupportAppNavigator(activity, photosTabContainerId).apply {
             applyCommands(arrayOf(Forward(AppScreen.Feed)))
         }
     }
 
     private val profileTabNavigator: ru.terrakok.cicerone.Navigator by lazy {
         Timber.i("profile tab navigator created")
-        SupportAppNavigator(activity, tabsContainerId).apply {
+        SupportAppNavigator(activity, profileTabContainerId).apply {
             applyCommands(arrayOf(Forward(AppScreen.SplashScreen)))
         }
     }
