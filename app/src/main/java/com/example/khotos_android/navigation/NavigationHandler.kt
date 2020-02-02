@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import com.example.common.navigation.Navigator
 import com.example.feature_login.presentation.sign_in.view.SignInFragment
 import com.example.feature_main_screen.view.TabsFragment
+import com.example.feature_photos.feed.view.PhotosFeedFragment
 import com.example.feature_splash.view.SplashFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -28,7 +29,7 @@ class NavigationHandler(
     private val photosTabNavigator: ru.terrakok.cicerone.Navigator by lazy {
         Timber.i("photos tab navigator created")
         SupportAppNavigator(activity, tabsContainerId).apply {
-            applyCommands(arrayOf(Forward(AppScreen.SignInScreen)))
+            applyCommands(arrayOf(Forward(AppScreen.Feed)))
         }
     }
 
@@ -80,6 +81,10 @@ private sealed class AppScreen : SupportAppScreen() {
 
     object MainScreen : AppScreen() {
         override fun getFragment(): Fragment = TabsFragment.newInstance()
+    }
+
+    object Feed : AppScreen() {
+        override fun getFragment(): Fragment = PhotosFeedFragment.newInstance()
     }
 }
 

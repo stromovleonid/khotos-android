@@ -1,6 +1,10 @@
 package com.example.common.di.app
 
+import android.content.Context
+import androidx.room.Room
 import com.example.common.di.DateTimeFormatQualifier
+import com.example.data.datasources.db.AppDatabase
+import com.example.data.datasources.db.PhotosDao
 import com.example.data.utils.DispatchersProvider
 import com.example.data.utils.DispatchersProviderImpl
 import com.google.gson.Gson
@@ -9,6 +13,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
+import javax.inject.Singleton
 
 @Module
 abstract class AppModule {
@@ -22,14 +27,27 @@ abstract class AppModule {
         @JvmStatic
         @Provides
         @Reusable
-        fun provideGson(@DateTimeFormatQualifier dateTimeFormat: String): Gson
-                = GsonBuilder().setDateFormat(dateTimeFormat).create()
+        fun providesGson(@DateTimeFormatQualifier dateTimeFormat: String): Gson =
+            GsonBuilder().setDateFormat(dateTimeFormat).create()
 
         @JvmStatic
         @Provides
         @Reusable
         @DateTimeFormatQualifier
-        fun provideDateTimeFormat(): String = "dd-MM-yyyy, HH:mm"
+        fun providesDateTimeFormat(): String = "dd-MM-yyyy, HH:mm"
+
+        @JvmStatic
+        @Provides
+        @Singleton
+        fun providesAppDatabase(appContext: Context): AppDatabase = Room.databaseBuilder(
+            appContext,
+            AppDatabase::class.java, "app-db"
+        ).build()
+
+        @JvmStatic
+        @Provides
+        @Singleton
+        fun providesPhotosDao(db: AppDatabase): PhotosDao = db.photosDao()
     }
 
 }

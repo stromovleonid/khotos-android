@@ -34,11 +34,15 @@ interface ApiService {
 }
 
 @Reusable
-class ApiServiceAdapter @Inject constructor(private val apiService: ApiService) : AuthApi {
+class ApiServiceAdapter @Inject constructor(private val apiService: ApiService) : AuthApi,
+    PhotosFeedApi {
 
     override suspend fun refreshToken(token: String): Response<AuthResponse> =
         apiService.refreshToken()
 
     override suspend fun login(login: String, password: String): Response<AuthResponse> =
         apiService.login(login, password)
+
+    override suspend fun getPhotosFeed(pageIndex: Int, pageSize: Int): Response<PhotosResponse> =
+        apiService.getPhotosFeed(pageIndex, pageSize)
 }
