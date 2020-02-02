@@ -5,8 +5,9 @@ import com.example.data.model.photo.Photo
 
 data class PhotosFeedModelState(val photos: List<Photo>,
                                 val isLoading: Boolean,
-                                val lastPageLoaded: Int): ModelState {
+                                val lastPageLoaded: Int,
+                                val isLastPage: Boolean): ModelState {
     companion object {
-        fun default() = PhotosFeedModelState(emptyList(), true, -1)
+        fun default() = PhotosFeedModelState(emptyList(), true, -1, false)
     }
 }

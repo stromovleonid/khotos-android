@@ -21,11 +21,21 @@ class PhotosFeedIntentFactory(
         when (event) {
             PhotosFeedViewEvent.LoadMore -> Intent
                 .create({ it.copy(isLoading = true) }) { state, model, scope ->
+                    if (state.isLastPage) return@create
                     scope.launch(dispatchersProvider.io) {
                         val pageIndex = state.lastPageLoaded + 1
-                        val newPhotos = photosApi.getPhotosFeed(pageIndex, pageSize)
-                        dao.addAll(newPhotos.body()!!.map { Photo.fromResponse(it) })
-                        model.consume(Intent.create { it.copy(isLoading = false, lastPageLoaded = pageIndex) })
+                        val newPhotos = photosApi.getPhotosFeed(
+                            pageIndex,
+                            pageSize
+                        ).body()!!.map { Photo.fromResponse(it) }
+                        dao.addAll(newPhotos)
+                        model.consume(Intent.create {
+                            it.copy(
+                                isLoading = false,
+                                lastPageLoaded = pageIndex,
+                                isLastPage = newPhotos.isEmpty() || newPhotos.size != pageSize
+                            )
+                        })
                     }
                 }
         }

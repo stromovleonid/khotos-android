@@ -40,7 +40,9 @@ open class PhotosFeedModel(
         PhotosFeedModelState(
             it,
             false,
-            (it.size / pageSize) - 1
+            0,
+            false
+
         )
     }
 
