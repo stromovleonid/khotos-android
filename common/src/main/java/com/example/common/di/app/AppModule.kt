@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import com.example.common.di.DateTimeFormatQualifier
 import com.example.data.datasources.db.AppDatabase
-import com.example.data.datasources.db.PhotosDao
 import com.example.data.utils.DispatchersProvider
 import com.example.data.utils.DispatchersProviderImpl
 import com.google.gson.Gson
@@ -43,11 +42,6 @@ abstract class AppModule {
             appContext,
             AppDatabase::class.java
         ).build()
-
-        @JvmStatic
-        @Provides
-        @Singleton
-        fun providesPhotosDao(db: AppDatabase): PhotosDao = db.photosDao()
     }
 
 }

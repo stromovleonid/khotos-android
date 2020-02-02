@@ -2,7 +2,7 @@ package com.example.feature_photos.feed.model
 
 import com.example.common.mvi.intent.Intent
 import com.example.common.mvi.model.Model
-import com.example.data.datasources.db.PhotosDao
+import com.example.data.repositories.PhotosRepository
 import com.example.data.utils.DispatchersProvider
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
@@ -12,9 +12,8 @@ import kotlinx.coroutines.flow.map
 @FlowPreview
 open class PhotosFeedModel(
     private val initialState: PhotosFeedModelState,
-    private val photosDao: PhotosDao,
-    dispatchersProvider: DispatchersProvider,
-    private val pageSize: Int
+    private val photosRepository: PhotosRepository,
+    dispatchersProvider: DispatchersProvider
 ) : Model<PhotosFeedModelState> {
 
     private val intents: Channel<Intent<PhotosFeedModelState>> = Channel()
@@ -36,7 +35,7 @@ open class PhotosFeedModel(
         intents.send(intent)
     }
 
-    override fun observe() = photosDao.getAll().map {
+    override fun observe() = photosRepository.getPhotosFeed().map {
         PhotosFeedModelState(
             it,
             false,

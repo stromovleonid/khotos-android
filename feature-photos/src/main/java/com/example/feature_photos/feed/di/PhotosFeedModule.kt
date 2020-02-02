@@ -9,7 +9,7 @@ import com.example.common.mvi.intent.StateMapper
 import com.example.common.mvi.model.Model
 import com.example.data.datasources.api.ApiServiceAdapter
 import com.example.data.datasources.api.PhotosFeedApi
-import com.example.data.datasources.db.PhotosDao
+import com.example.data.repositories.PhotosRepository
 import com.example.data.utils.DispatchersProvider
 import com.example.feature_photos.feed.intent.PhotosFeedIntentFactory
 import com.example.feature_photos.feed.model.PhotosFeedModel
@@ -57,21 +57,22 @@ abstract class PhotosFeedModule {
         @FragmentScope
         fun providesModel(
             initialState: PhotosFeedModelState,
-            photosDao: PhotosDao,
+            photosRepository: PhotosRepository,
             dispatchersProvider: DispatchersProvider
         ): Model<PhotosFeedModelState> {
-            return PhotosFeedModel(initialState, photosDao, dispatchersProvider, Constants.PHOTOS_PAGE_SIZE)
+            return PhotosFeedModel(initialState, photosRepository, dispatchersProvider)
         }
 
         @JvmStatic
         @Provides
         @FragmentScope
         fun providesIntentFactory(
-            dispatchersProvider: DispatchersProvider,
-            photosDao: PhotosDao,
-            photosFeedApi: PhotosFeedApi
+            photosRepository: PhotosRepository
         ): IntentFactory<PhotosFeedViewEvent, PhotosFeedModelState> {
-            return PhotosFeedIntentFactory(dispatchersProvider, photosDao, photosFeedApi, Constants.PHOTOS_PAGE_SIZE)
+            return PhotosFeedIntentFactory(
+                photosRepository,
+                Constants.PHOTOS_PAGE_SIZE
+            )
         }
 
         @JvmStatic

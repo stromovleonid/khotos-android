@@ -5,9 +5,9 @@ import com.example.common.di.network.AuthModule
 import com.example.common.di.network.NetworkModule
 import com.example.data.datasources.api.ApiServiceAdapter
 import com.example.data.datasources.api.AuthApi
-import com.example.data.datasources.db.PhotosDao
 import com.example.data.interactors.token.TokenInteractor
 import com.example.data.repositories.AuthRepository
+import com.example.data.repositories.PhotosRepository
 import com.example.data.utils.DispatchersProvider
 import com.google.gson.Gson
 import dagger.BindsInstance
@@ -19,7 +19,8 @@ import javax.inject.Singleton
     modules =
     [AppModule::class,
         NetworkModule::class,
-        AuthModule::class]
+        AuthModule::class,
+        PhotosModule::class]
 )
 interface AppComponent {
     fun getDispatchersProvider(): DispatchersProvider
@@ -34,7 +35,7 @@ interface AppComponent {
 
     fun getAuthRepository(): AuthRepository
 
-    fun getPhotosDao(): PhotosDao
+    fun getPhotosRepository(): PhotosRepository
 
     @Component.Builder
     interface Builder {
