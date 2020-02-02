@@ -2,6 +2,8 @@ package com.example.data.interactors.token
 
 import android.content.Context
 import com.orhanobut.hawk.Hawk
+import javax.inject.Inject
+import javax.inject.Singleton
 
 interface PersistentKeyValueStorage {
     fun <V> put(key: String, value: V)
@@ -9,7 +11,8 @@ interface PersistentKeyValueStorage {
     fun <V> get(key: String): V?
 }
 
-class SecurePersistentKeyValueStorage(context: Context):
+@Singleton
+class SecurePersistentKeyValueStorage @Inject constructor(context: Context):
     PersistentKeyValueStorage {
 
     init {

@@ -4,9 +4,13 @@ import com.example.data.datasources.api.AuthApi
 import com.example.data.model.dto.AuthResponse
 import com.example.data.utils.DispatchersProvider
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AuthRepository(private val authApi: AuthApi,
-                     private val dispatchersProvider: DispatchersProvider): BaseApiRepository() {
+@Singleton
+
+class AuthRepository @Inject constructor(private val authApi: AuthApi,
+                                         private val dispatchersProvider: DispatchersProvider): BaseApiRepository() {
     suspend fun refreshToken(token: String): AuthResponse {
         return withContext(dispatchersProvider.io) {
             executeApiRequest {

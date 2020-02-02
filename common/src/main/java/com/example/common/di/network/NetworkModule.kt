@@ -1,10 +1,7 @@
 package com.example.common.di.network
 
-import android.content.Context
 import com.example.common.BuildConfig
 import com.example.data.datasources.api.ApiService
-import com.example.data.datasources.api.ApiServiceAdapter
-import com.example.data.interactors.token.SecurePersistentKeyValueStorage
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -52,15 +49,4 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
-
-    @Provides
-    @Singleton
-    fun provideApiServiceAdapter(apiService: ApiService): ApiServiceAdapter =
-        ApiServiceAdapter(apiService)
-
-
-    @Provides
-    @Singleton
-    fun providesSecureKeyValueStorage(context: Context): SecurePersistentKeyValueStorage =
-        SecurePersistentKeyValueStorage(context)
 }

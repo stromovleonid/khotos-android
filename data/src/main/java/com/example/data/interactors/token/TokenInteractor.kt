@@ -2,10 +2,13 @@ package com.example.data.interactors.token
 
 import com.example.data.exceptions.NetworkConnectionException
 import com.example.data.model.CheckTokenResult
+import javax.inject.Inject
+import javax.inject.Singleton
 
 private const val TOKEN = "token"
 
-class TokenInteractor(
+@Singleton
+class TokenInteractor @Inject constructor(
     private val storage: SecurePersistentKeyValueStorage,
     private val refreshTokenUseCase: RefreshTokenUseCase
 ) {

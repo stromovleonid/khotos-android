@@ -5,8 +5,7 @@ import com.example.data.datasources.api.ApiServiceAdapter
 import com.example.data.datasources.api.PhotosFeedApi
 import com.example.data.datasources.db.AppDatabase
 import com.example.data.datasources.db.PhotosDao
-import com.example.data.repositories.PhotosRepository
-import com.example.data.utils.DispatchersProvider
+import com.example.data.di.PhotosPageSizeQualifier
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -23,12 +22,8 @@ abstract class PhotosModule {
 
         @JvmStatic
         @Provides
-        @Singleton
-        fun providesPhotosRepository(api: PhotosFeedApi,
-                                     dao: PhotosDao,
-                                     dispatchersProvider: DispatchersProvider): PhotosRepository {
-            return PhotosRepository(api, dao, dispatchersProvider, Constants.PHOTOS_PAGE_SIZE)
-        }
+        @PhotosPageSizeQualifier
+        fun providesPhotosPageSize(): Int = Constants.PHOTOS_PAGE_SIZE
 
         @JvmStatic
         @Provides

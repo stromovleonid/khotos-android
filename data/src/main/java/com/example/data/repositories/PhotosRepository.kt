@@ -2,17 +2,21 @@ package com.example.data.repositories
 
 import com.example.data.datasources.api.PhotosFeedApi
 import com.example.data.datasources.db.PhotosDao
+import com.example.data.di.PhotosPageSizeQualifier
 import com.example.data.model.UpdatePhotosRequestResult
 import com.example.data.model.photo.Photo
 import com.example.data.utils.DispatchersProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PhotosRepository(
+@Singleton
+class PhotosRepository @Inject constructor(
     private val photosFeedApi: PhotosFeedApi,
     private val photosDao: PhotosDao,
     private val dispatchersProvider: DispatchersProvider,
-    private val pageSize: Int
+    @PhotosPageSizeQualifier private val pageSize: Int
 ) : BaseApiRepository() {
 
     fun getPhotosFeed(): Flow<List<Photo>> = photosDao.getAll()

@@ -4,10 +4,10 @@ import com.example.data.model.dto.AuthResponse
 import com.example.data.model.dto.PhotosResponse
 import com.example.data.model.dto.UserMetadataResponse
 import com.example.data.model.dto.UsersResponse
-import dagger.Reusable
 import retrofit2.Response
 import retrofit2.http.*
 import javax.inject.Inject
+import javax.inject.Singleton
 
 interface ApiService {
     @FormUrlEncoded
@@ -33,7 +33,7 @@ interface ApiService {
 
 }
 
-@Reusable
+@Singleton
 class ApiServiceAdapter @Inject constructor(private val apiService: ApiService) : AuthApi,
     PhotosFeedApi {
 

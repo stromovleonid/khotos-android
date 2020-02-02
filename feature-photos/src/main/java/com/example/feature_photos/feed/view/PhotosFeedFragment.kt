@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.common.Constants
 import com.example.common.di.InjectionsHolder
 import com.example.common.mvi.view.BaseMviFragment
 import com.example.common.view.extensions.paginationEvents
+import com.example.data.di.PhotosPageSizeQualifier
 import com.example.feature_photos.R
 import com.example.feature_photos.feed.di.DaggerPhotosFeedComponent
 import com.example.feature_photos.feed.model.PhotosFeedModelState
@@ -28,6 +28,10 @@ class PhotosFeedFragment :
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @JvmField
+    @set:[Inject PhotosPageSizeQualifier]
+    var pageSize: Int = 0
 
     override val viewModel: PhotosFeedViewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(PhotosFeedViewModel::class.java)
@@ -65,7 +69,7 @@ class PhotosFeedFragment :
 
     override fun viewEvents(): Flow<PhotosFeedViewEvent> {
         return photosList.paginationEvents(
-            photosList.layoutManager as LinearLayoutManager, Constants.PHOTOS_PAGE_SIZE
+            photosList.layoutManager as LinearLayoutManager, pageSize
         ).map { PhotosFeedViewEvent.LoadMore }
     }
 

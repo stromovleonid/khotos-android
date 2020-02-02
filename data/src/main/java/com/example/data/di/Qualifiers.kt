@@ -1,9 +1,9 @@
-package com.example.common.di
+package com.example.data.di
 
 import javax.inject.Qualifier
+
 
 @Qualifier
 @MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
-annotation class DateTimeFormatQualifier
-
+annotation class PhotosPageSizeQualifier

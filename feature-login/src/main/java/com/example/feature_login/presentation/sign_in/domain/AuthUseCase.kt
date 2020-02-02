@@ -1,9 +1,12 @@
 package com.example.feature_login.presentation.sign_in.domain
 
+import com.example.common.di.FragmentScope
 import com.example.data.interactors.token.TokenInteractor
 import com.example.data.repositories.AuthRepository
+import javax.inject.Inject
 
-class AuthUseCase(private val authRepository: AuthRepository,
+@FragmentScope
+class AuthUseCase @Inject constructor(private val authRepository: AuthRepository,
                   private val tokenInteractor: TokenInteractor) {
 
     suspend fun auth(login: String, pass: String) {
