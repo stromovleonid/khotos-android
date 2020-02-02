@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import androidx.lifecycle.ViewModelProvider
 import com.example.common.di.InjectionsHolder
-import com.example.common.mvi.view.BaseFragment
+import com.example.common.mvi.view.BaseMviFragment
 import com.example.feature_splash.R
 import com.example.feature_splash.di.DaggerSplashComponent
 import kotlinx.android.synthetic.main.splash_fragment.*
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @FlowPreview
 @ExperimentalCoroutinesApi
-class SplashFragment : BaseFragment<SplashViewEvent, SplashViewModelState, SplashViewModelState>() {
+class SplashFragment : BaseMviFragment<SplashViewEvent, SplashViewModelState, SplashViewModelState>() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -65,6 +65,7 @@ class SplashFragment : BaseFragment<SplashViewEvent, SplashViewModelState, Splas
                     .setDuration(800)
                     .start()
             SplashViewModelState.NotLogged -> navigator?.signIn()
+            SplashViewModelState.Logged -> navigator?.main()
         }
     }
 

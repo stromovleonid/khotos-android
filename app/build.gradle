@@ -25,6 +25,7 @@ dependencies {
     implementation project(':data')
     implementation project(':feature-login')
     implementation project(':feature-splash')
+    implementation project(':feature-main-screen')
     implementation project(':common')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])

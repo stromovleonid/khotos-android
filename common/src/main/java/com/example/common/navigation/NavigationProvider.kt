@@ -5,7 +5,11 @@ interface NavigationProvider {
 }
 
 interface Navigator {
+    fun exit()
     fun signIn()
     fun splash()
-    fun exit()
+    fun main()
+
+    fun photosTab()
+    fun profileTab()
 }

@@ -11,14 +11,16 @@ import com.example.common.view.extensions.clicks
 import com.example.common.view.extensions.disableError
 import com.example.common.view.extensions.textChanges
 import com.example.common.view.fragment.BlockingLoadingFragment
-
 import com.example.feature_login.R
 import com.example.feature_login.presentation.sign_in.di.DaggerLoginComponent
 import com.example.feature_login.presentation.sign_in.model.LoginModelState
 import kotlinx.android.synthetic.main.sign_in_fragment.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flattenMerge
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -91,6 +93,7 @@ class SignInFragment :
             is LoginViewState.Success -> {
                 hideLoading()
                 setInputEnabled(true)
+                navigator?.main()
             }
         }
     }

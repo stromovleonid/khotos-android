@@ -2,24 +2,18 @@ package com.example.common.mvi.view
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.common.mvi.model.ModelState
-import com.example.common.navigation.NavigationProvider
-import com.example.common.navigation.Navigator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @ExperimentalCoroutinesApi
-abstract class BaseFragment<E : ViewEvent, VS : ViewState, MS : ModelState> : Fragment() {
+abstract class BaseMviFragment<E : ViewEvent, VS : ViewState, MS : ModelState> : BaseNavigationFragment() {
 
     abstract val viewModel: BaseViewModel<E, VS, MS>
-
-    protected val navigator: Navigator?
-        get() = (activity as? NavigationProvider)?.provideNavigator()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

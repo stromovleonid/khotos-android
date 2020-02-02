@@ -9,6 +9,7 @@ android {
         minSdkVersion minSdk
         targetSdkVersion targetSdk
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
@@ -25,11 +26,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation project(':common')
-    api project(':data')
-
+    
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     daggerDependencies dependencies
     viewDependencies dependencies
-    dataDependencies dependencies
     commonDependencies dependencies
-    testingDependencies dependencies
 }
