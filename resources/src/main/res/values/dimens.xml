@@ -6,5 +6,6 @@
     <dimen name="margin_vertical_default_32dp">32dp</dimen>
 
     <dimen name="elevation_default_3dp">3dp</dimen>
+    <dimen name="height_photo_view">120dp</dimen>
 
 </resources>

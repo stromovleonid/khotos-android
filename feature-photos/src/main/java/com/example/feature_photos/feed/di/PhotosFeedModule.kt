@@ -1,6 +1,7 @@
 package com.example.feature_photos.feed.di
 
 import androidx.lifecycle.ViewModel
+import com.example.common.Constants
 import com.example.common.di.FragmentScope
 import com.example.common.di.ViewModelKey
 import com.example.common.mvi.intent.IntentFactory
@@ -59,7 +60,7 @@ abstract class PhotosFeedModule {
             photosDao: PhotosDao,
             dispatchersProvider: DispatchersProvider
         ): Model<PhotosFeedModelState> {
-            return PhotosFeedModel(initialState, photosDao, dispatchersProvider, 18)
+            return PhotosFeedModel(initialState, photosDao, dispatchersProvider, Constants.PHOTOS_PAGE_SIZE)
         }
 
         @JvmStatic
@@ -70,7 +71,7 @@ abstract class PhotosFeedModule {
             photosDao: PhotosDao,
             photosFeedApi: PhotosFeedApi
         ): IntentFactory<PhotosFeedViewEvent, PhotosFeedModelState> {
-            return PhotosFeedIntentFactory(dispatchersProvider, photosDao, photosFeedApi, 18)
+            return PhotosFeedIntentFactory(dispatchersProvider, photosDao, photosFeedApi, Constants.PHOTOS_PAGE_SIZE)
         }
 
         @JvmStatic

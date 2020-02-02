@@ -39,9 +39,9 @@ abstract class AppModule {
         @JvmStatic
         @Provides
         @Singleton
-        fun providesAppDatabase(appContext: Context): AppDatabase = Room.databaseBuilder(
+        fun providesAppDatabase(appContext: Context): AppDatabase = Room.inMemoryDatabaseBuilder(
             appContext,
-            AppDatabase::class.java, "app-db"
+            AppDatabase::class.java
         ).build()
 
         @JvmStatic

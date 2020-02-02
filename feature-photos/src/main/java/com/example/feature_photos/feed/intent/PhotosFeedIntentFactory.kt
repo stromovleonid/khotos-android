@@ -20,10 +20,12 @@ class PhotosFeedIntentFactory(
     override suspend fun toIntent(event: PhotosFeedViewEvent): Intent<PhotosFeedModelState> =
         when (event) {
             PhotosFeedViewEvent.LoadMore -> Intent
-                .create({ it.copy(isLoading = true) }) { state, _, scope ->
+                .create({ it.copy(isLoading = true) }) { state, model, scope ->
                     scope.launch(dispatchersProvider.io) {
-                        val newPhotos = photosApi.getPhotosFeed(state.lastPageLoaded + 1, pageSize)
+                        val pageIndex = state.lastPageLoaded + 1
+                        val newPhotos = photosApi.getPhotosFeed(pageIndex, pageSize)
                         dao.addAll(newPhotos.body()!!.map { Photo.fromResponse(it) })
+                        model.consume(Intent.create { it.copy(isLoading = false, lastPageLoaded = pageIndex) })
                     }
                 }
         }
