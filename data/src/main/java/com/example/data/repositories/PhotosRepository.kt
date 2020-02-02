@@ -17,21 +17,25 @@ class PhotosRepository(
 
     fun getPhotosFeed(): Flow<List<Photo>> = photosDao.getAll()
 
-    suspend fun requestPhotosFeedPage(lastPageLoaded: Int): UpdatePhotosRequestResult = withContext(dispatchersProvider.io) {
-        val pageIndex = lastPageLoaded + 1
-        val response = try {
-            executeApiRequest {
-                photosFeedApi.getPhotosFeed(
-                    pageIndex,
-                    pageSize
-                )
+    suspend fun requestPhotosFeedPage(lastPageLoaded: Int): UpdatePhotosRequestResult =
+        withContext(dispatchersProvider.io) {
+            val pageIndex = lastPageLoaded + 1
+            val response = try {
+                executeApiRequest {
+                    photosFeedApi.getPhotosFeed(
+                        pageIndex,
+                        pageSize
+                    )
+                }
+            } catch (e: Exception) {
+                return@withContext UpdatePhotosRequestResult.Error(e)
             }
-        } catch (e: Exception) {
-            return@withContext UpdatePhotosRequestResult.Error(e)
+            val newPhotos = response.map { Photo.fromResponse(it) }
+            photosDao.addAll(newPhotos)
+            return@withContext UpdatePhotosRequestResult.Success(
+                pageIndex, newPhotos.isEmpty()
+                        || newPhotos.size != pageSize
+            )
         }
-        val newPhotos = response.map { Photo.fromResponse(it) }
-        photosDao.addAll(newPhotos)
-        return@withContext UpdatePhotosRequestResult.Success(pageIndex, newPhotos.size)
-    }
 
 }
