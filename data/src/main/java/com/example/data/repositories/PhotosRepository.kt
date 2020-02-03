@@ -21,6 +21,8 @@ class PhotosRepository @Inject constructor(
 
     fun getPhotosFeed(): Flow<List<Photo>> = photosDao.getAll()
 
+    fun getUserPhotos(): Flow<List<Photo>> = photosDao.getAll()
+
     suspend fun requestPhotosFeedPage(lastPageLoaded: Int): UpdatePhotosRequestResult =
         withContext(dispatchersProvider.io) {
             val pageIndex = lastPageLoaded + 1

@@ -14,13 +14,15 @@ data class Photo(
     val id: Long,
     val url: String,
     @Embedded
-    val metadata: PhotoMetadata
+    val metadata: PhotoMetadata,
+    val authorId: Long
 ) {
     companion object {
         fun fromResponse(photoResponse: PhotoResponse) = Photo(
             photoResponse.id,
             photoResponse.url,
-            PhotoMetadata.fromResponse(photoResponse.metadata)
+            PhotoMetadata.fromResponse(photoResponse.metadata),
+            photoResponse.author.id
         )
     }
 }
