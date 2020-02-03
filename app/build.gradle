@@ -26,6 +26,7 @@ dependencies {
     implementation project(':feature-splash')
     implementation project(':feature-main-screen')
     implementation project(':feature-photos')
+    implementation project(':feature-profile')
     api project(':data')
     implementation project(':common')
 

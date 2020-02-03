@@ -7,6 +7,7 @@ import com.example.common.navigation.Navigator
 import com.example.feature_login.presentation.sign_in.view.SignInFragment
 import com.example.feature_main_screen.view.TabsFragment
 import com.example.feature_photos.feed.view.PhotosFeedFragment
+import com.example.feature_profile.profile.view.ProfilePageFragment
 import com.example.feature_splash.view.SplashFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -37,7 +38,7 @@ class NavigationHandler(
     private val profileTabNavigator: ru.terrakok.cicerone.Navigator by lazy {
         Timber.i("profile tab navigator created")
         SupportAppNavigator(activity, profileTabContainerId).apply {
-            applyCommands(arrayOf(Forward(AppScreen.SplashScreen)))
+            applyCommands(arrayOf(Forward(AppScreen.MyProfile)))
         }
     }
 
@@ -86,6 +87,10 @@ private sealed class AppScreen : SupportAppScreen() {
 
     object Feed : AppScreen() {
         override fun getFragment(): Fragment = PhotosFeedFragment.newInstance()
+    }
+
+    object MyProfile : AppScreen() {
+        override fun getFragment(): Fragment = ProfilePageFragment.newInstance()
     }
 }
 

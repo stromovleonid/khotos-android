@@ -6,8 +6,6 @@ import com.example.common.di.ViewModelKey
 import com.example.common.mvi.intent.IntentFactory
 import com.example.common.mvi.intent.StateMapper
 import com.example.common.mvi.model.Model
-import com.example.data.datasources.api.ApiServiceAdapter
-import com.example.data.datasources.api.PhotosFeedApi
 import com.example.data.repositories.PhotosRepository
 import com.example.data.utils.DispatchersProvider
 import com.example.feature_photos.feed.intent.PhotosFeedIntentFactory
@@ -79,11 +77,5 @@ abstract class PhotosFeedModule {
         fun providesStateMapper(): StateMapper<PhotosFeedViewState, PhotosFeedModelState> {
             return PhotosStateMapper()
         }
-
-        @JvmStatic
-        @Provides
-        @FragmentScope
-        fun providesPhotosFeedApi(apiServiceAdapter: ApiServiceAdapter): PhotosFeedApi =
-            apiServiceAdapter
     }
 }
