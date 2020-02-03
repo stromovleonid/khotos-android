@@ -5,4 +5,6 @@ import retrofit2.Response
 
 interface PhotosFeedApi {
     suspend fun getPhotosFeed(pageIndex: Int, pageSize: Int): Response<PhotosResponse>
+
+    suspend fun getUserPhotos(userId: Int, pageIndex: Int, pageSize: Int): Response<PhotosResponse>
 }
