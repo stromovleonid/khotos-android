@@ -11,10 +11,16 @@ import javax.inject.Singleton
 
 class AuthRepository @Inject constructor(private val authApi: AuthApi,
                                          private val dispatchersProvider: DispatchersProvider): BaseApiRepository() {
+
+    //TODO update outside, on successful auth
+    private var currentUserId: Long = 0
+
     suspend fun refreshToken(token: String): AuthResponse {
         return withContext(dispatchersProvider.io) {
             executeApiRequest {
-                authApi.refreshToken(token)
+                authApi.refreshToken(token).apply {
+                    currentUserId =  body()?.metadata?.id ?: 0
+                }
             }
         }
     }
@@ -22,8 +28,12 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi,
     suspend fun auth(login: String, pass: String): AuthResponse {
         return withContext(dispatchersProvider.io) {
             executeApiRequest {
-                authApi.login(login, pass)
+                authApi.login(login, pass).apply {
+                    currentUserId =  body()?.metadata?.id ?: 0
+                }
             }
         }
     }
+
+    fun getCurrentUserId(): Long = currentUserId
 }

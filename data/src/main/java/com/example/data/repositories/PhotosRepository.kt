@@ -4,10 +4,12 @@ import com.example.data.datasources.api.PhotosFeedApi
 import com.example.data.datasources.db.PhotosDao
 import com.example.data.di.PhotosPageSizeQualifier
 import com.example.data.model.UpdatePhotosRequestResult
+import com.example.data.model.dto.PhotosResponse
 import com.example.data.model.photo.Photo
 import com.example.data.utils.DispatchersProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,17 +23,29 @@ class PhotosRepository @Inject constructor(
 
     fun getPhotosFeed(): Flow<List<Photo>> = photosDao.getAll()
 
-    fun getUserPhotos(): Flow<List<Photo>> = photosDao.getAll()
+    suspend fun requestUserPhotosUpdate(userId: Long, lastPageLoaded: Int): UpdatePhotosRequestResult =
+        requestPhotosPage(lastPageLoaded) { pageIndex ->
+            photosFeedApi.getUserPhotos(
+                userId,
+                pageIndex,
+                pageSize
+            )
+        }
 
     suspend fun requestPhotosFeedPage(lastPageLoaded: Int): UpdatePhotosRequestResult =
+        requestPhotosPage(lastPageLoaded) { pageIndex ->
+            photosFeedApi.getPhotosFeed(
+                pageIndex,
+                pageSize
+            )
+        }
+
+    private suspend fun requestPhotosPage(lastPageLoaded: Int, block: suspend (Int) -> Response<PhotosResponse>) =
         withContext(dispatchersProvider.io) {
             val pageIndex = lastPageLoaded + 1
             val response = try {
                 executeApiRequest {
-                    photosFeedApi.getPhotosFeed(
-                        pageIndex,
-                        pageSize
-                    )
+                    block(pageIndex)
                 }
             } catch (e: Exception) {
                 return@withContext UpdatePhotosRequestResult.Error(e)

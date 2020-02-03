@@ -23,7 +23,7 @@ interface ApiService {
                               @Query("pageSize") pageSize: Int): Response<PhotosResponse>
 
     @GET("/photos/{userId}")
-    suspend fun getUserPhotos(@Path("userId") userId: Int,
+    suspend fun getUserPhotos(@Path("userId") userId: Long,
                               @Query("pageIndex") pageIndex: Int,
                               @Query("pageSize") pageSize: Int): Response<PhotosResponse>
 
@@ -54,7 +54,7 @@ class ApiServiceAdapter @Inject constructor(private val apiService: ApiService) 
         apiService.getPhotosFeed(pageIndex, pageSize)
 
     override suspend fun getUserPhotos(
-        userId: Int,
+        userId: Long,
         pageIndex: Int,
         pageSize: Int
     ): Response<PhotosResponse> = apiService.getUserPhotos(userId, pageIndex, pageSize)
