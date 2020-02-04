@@ -7,6 +7,7 @@ import com.example.data.interactors.token.TokenInteractor
 import com.example.data.model.dto.AuthResponse
 import com.example.data.model.dto.UserMetadataResponse
 import com.example.data.repositories.AuthRepository
+import com.example.data.repositories.UsersRepository
 import com.example.data.utils.DispatchersProviderImpl
 import com.example.data.utils.TestUtils.testObserveFlow
 import com.example.data.utils.TestUtils.testPause
@@ -40,6 +41,9 @@ class LoginIntentFactoryTest {
     @Mock
     lateinit var tokenInteractor: TokenInteractor
 
+    @Mock
+    lateinit var usersRepository: UsersRepository
+
     lateinit var factory: LoginIntentFactory
 
     lateinit var model: Model<LoginModelState>
@@ -55,7 +59,7 @@ class LoginIntentFactoryTest {
         doNothing().`when`(tokenInteractor).saveToken(ArgumentMatchers.anyString())
 
         model = BaseChannelModel(LoginModelState.default(), dispatchersProvider)
-        authRepository = AuthRepository(authApi, dispatchersProvider)
+        authRepository = AuthRepository(authApi, usersRepository, dispatchersProvider)
         useCase = AuthUseCase(authRepository, tokenInteractor)
         factory = LoginIntentFactory(useCase, dispatchersProvider)
     }
