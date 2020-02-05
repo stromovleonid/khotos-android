@@ -6,8 +6,6 @@ import com.example.common.di.ViewModelKey
 import com.example.common.mvi.intent.IntentFactory
 import com.example.common.mvi.intent.StateMapper
 import com.example.common.mvi.model.Model
-import com.example.data.datasources.api.ApiServiceAdapter
-import com.example.data.datasources.api.UsersApi
 import com.example.data.repositories.AuthRepository
 import com.example.data.repositories.PhotosRepository
 import com.example.data.repositories.UsersRepository
@@ -84,11 +82,5 @@ abstract class ProfilePageModule {
         fun providesStateMapper(): StateMapper<ProfilePageViewState, ProfilePageModelState> {
             return ProfilePageStateMapper()
         }
-
-        @JvmStatic
-        @Provides
-        @FragmentScope
-        fun providesPhotosFeedApi(apiServiceAdapter: ApiServiceAdapter): UsersApi =
-            apiServiceAdapter
     }
 }

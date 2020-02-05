@@ -5,10 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".profile.view.ProfilePageFragment">
 
-    <TextView
-        android:id="@+id/username"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/photosList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-         />
+        android:layout_height="match_parent"/>
 
 </FrameLayout>
