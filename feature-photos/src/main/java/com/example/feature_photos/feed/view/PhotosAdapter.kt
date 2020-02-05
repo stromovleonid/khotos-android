@@ -15,9 +15,7 @@ fun photoAdapterDelegate() = adapterDelegate<PhotosFeedCell.PhotoCell, PhotosFee
     }
 }
 
-fun loadingAdapterDelegate() = adapterDelegate<PhotosFeedCell.LoadingCell, PhotosFeedCell>(R.layout.item_loading) {
-
-}
+fun loadingAdapterDelegate() = adapterDelegate<PhotosFeedCell.LoadingCell, PhotosFeedCell>(R.layout.item_loading) { }
 
 fun photosAdapter() = ListDelegationAdapter<List<PhotosFeedCell>> (
     photoAdapterDelegate(),

@@ -1,5 +1,6 @@
 package com.example.feature_profile.profile.view
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.di.InjectionsHolder
 import com.example.common.mvi.view.BaseMviFragment
+import com.example.common.view.extensions.loadAndExtractPalette
 import com.example.common.view.extensions.paginationEvents
 import com.example.data.di.PhotosPageSizeQualifier
 import com.example.feature_photos.feed.view.photosAdapter
@@ -76,6 +78,18 @@ class ProfilePageFragment :
     }
 
     override fun render(state: ProfilePageViewState) {
+        collapsingToolbar.title = state.username
+
+        userImage.loadAndExtractPalette(state.userImageInfo.url) {
+            collapsingToolbar.setExpandedTitleTextColor(
+                ColorStateList.valueOf(
+                    it.getDarkVibrantColor(
+                        0
+                    )
+                )
+            )
+        }
+
         photosAdapter.items = state.cells
         photosAdapter.notifyDataSetChanged()
     }

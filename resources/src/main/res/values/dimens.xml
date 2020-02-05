@@ -8,4 +8,6 @@
     <dimen name="elevation_default_3dp">3dp</dimen>
     <dimen name="height_photo_view">120dp</dimen>
 
+    <dimen name="height_profile_toolbar">240dp</dimen>
+
 </resources>
