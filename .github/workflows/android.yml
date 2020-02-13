@@ -16,3 +16,9 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build
+
+    - name: Run unit tests
+      run: ./gradlew testDevDebugUnitTest
+
+    - name: Check for obsolete dependencies
+      run: ./gradlew dependencyUpdates
